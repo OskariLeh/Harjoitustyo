@@ -9,12 +9,12 @@ public class User {
     private ArrayList<String> favouriteLakes = new ArrayList<>();
 
     public User(){
+
     }
 
     public void addLakeToFavorite (String lake) {
         favouriteLakes.add(lake);
     }
-
 
     public String getName() {
         return name;
