@@ -12,7 +12,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.os.StrictMode;
 import android.view.MenuItem;
+import android.view.View;
 
 
 import com.google.android.material.navigation.NavigationView;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,5 +71,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void testButton(View v) {
+        System.out.println("Trying to read");
+        JSONReader jsonReader = new JSONReader();
+        jsonReader.readJSON();
     }
 }
