@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AppManager {
     private ArrayList<Lake> lakes = new ArrayList<Lake>();
@@ -42,10 +43,13 @@ public class AppManager {
                     lake.setTown(jsonObject.getString("KuntaNimi"));
                     lake.setAreaOfLake(Double.parseDouble(jsonObject.getString("Vesiala")));
                     lake.setCordinates(jsonObject.getString("KoordErLat"), jsonObject.getString("KoordErLong"));
-                    lake.setAverageDepth(Double.parseDouble(jsonObject.getString("SyvyysKeski")));
+                    if (jsonObject.getString("SyvyysKeski") != "null") {
+                        lake.setAverageDepth(Double.parseDouble(jsonObject.getString("SyvyysKeski")));
+                    }
                     lake.setDrainageBasin(jsonObject.getString("VesalNimi"));
                     lakes.add(lake);
                 }
+                Collections.sort(lakeNames);
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (NumberFormatException e) {
