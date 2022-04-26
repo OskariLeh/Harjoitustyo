@@ -2,19 +2,20 @@ package com.example.harjoitustyo;
 
 public class Lake {
     private String name;
-    private String id;
+    private int id;
     private String town;
     private String drainageBasin;
 
-    private double cordLong;
-    private double cordLat;
-    private int averageDepth;
-    private long areaOfLake;
+    private String cordLong;
+    private String cordLat;
+    private double averageDepth;
+    private double areaOfLake;
+
 
     public void setName(String name) {
         this.name = name;
     }
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
     public void setTown(String town) {
@@ -23,14 +24,14 @@ public class Lake {
     public void setDrainageBasin(String drainageBasin) {
         this.drainageBasin = drainageBasin;
     }
-    public void setCordinates(double cordLong,double cordLat) {
+    public void setCordinates(String cordLong, String cordLat) {
         this.cordLong = cordLong;
         this.cordLat = cordLat;
     }
-    public void setAverageDepth(int averageDepth) {
+    public void setAverageDepth(double averageDepth) {
         this.averageDepth = averageDepth;
     }
-    public void setAreaOfLake(long areaOfLake) {
+    public void setAreaOfLake(double areaOfLake) {
         this.areaOfLake = areaOfLake;
     }
 
@@ -39,7 +40,7 @@ public class Lake {
     public String getName() {
         return name;
     }
-    public String getId() {
+    public int getId() {
         return id;
     }
     public String getTown() {
@@ -50,10 +51,10 @@ public class Lake {
     }
     /*TODO missä muodossa halutaan koordinaatit ulos? */
 
-    public int getAverageDepth() {
+    public double getAverageDepth() {
         return averageDepth;
     }
-    public long getAreaOfLake() {
+    public double getAreaOfLake() {
         return areaOfLake;
     }
 }
