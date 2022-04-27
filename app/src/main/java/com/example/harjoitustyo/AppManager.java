@@ -16,11 +16,11 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class AppManager {
-    private ArrayList<Lake> lakes = new ArrayList<Lake>();
-    int times=0;
-    public ArrayList<Lake> getLakes() {
+    private List<Lake> lakes = new ArrayList<Lake>();
+    public List<Lake> getLakes() {
         return lakes;
     }
 
@@ -28,7 +28,7 @@ public class AppManager {
     public void readJSON(){
         String json = getJSON();
 
-        if (json != null || times != 1) {
+        if (json != null) {
             try {
                 JSONObject jObj = new JSONObject(json);
                 JSONArray jsonArray = jObj.getJSONArray("value");
@@ -63,7 +63,7 @@ public class AppManager {
     public void readJSON(URL url){
         String json = getJSON(url);
 
-        if (json != null || times != 1) {
+        if (json != null ) {
             try {
                 JSONObject jObj = new JSONObject(json);
                 JSONArray jsonArray = jObj.getJSONArray("value");
@@ -84,7 +84,7 @@ public class AppManager {
                     lake.setDrainageBasin(jsonObject.getString("VesalNimi"));
                     lakes.add(lake);
                 }
-                if (jObj.getString("odata.nextLink") != null) {
+                if (jObj.has("odata.nextLink")) {
                     URL newUrl = new URL(jObj.getString("odata.nextLink"));
                     readJSON(newUrl);
                 }

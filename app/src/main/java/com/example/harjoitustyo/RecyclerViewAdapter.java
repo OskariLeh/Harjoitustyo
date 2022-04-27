@@ -19,11 +19,11 @@ import java.util.List;
 import java.util.Locale;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
-    private ArrayList<Lake> lakes ;
-    private ArrayList<Lake> lakesCopy ;
+    private List<Lake> lakes ;
+    private List<Lake> lakesCopy ;
     private Context context;
 
-    public RecyclerViewAdapter(ArrayList<Lake> lakes, Context context) {
+    public RecyclerViewAdapter(List<Lake> lakes, Context context) {
         this.lakes = lakes;
         this.context = context;
         lakesCopy = new ArrayList<>(lakes);
@@ -65,7 +65,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-            ArrayList<Lake> filteredList = new ArrayList<>();
+            List<Lake> filteredList = new ArrayList<>();
 
             if (charSequence == null || charSequence.length() == 0) {
                 filteredList.addAll(lakesCopy);
