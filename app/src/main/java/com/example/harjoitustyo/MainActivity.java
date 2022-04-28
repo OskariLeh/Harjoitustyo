@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView nav;
     RecyclerView recyclerView;
     AppManager manager = new AppManager();
-   RecyclerViewAdapter adapter;
+    RecyclerViewAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    // Laittaa painikkeen yläpalkkiin
+    // Initialises toolbars buttons and handles search functionality
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
@@ -96,6 +96,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         return true;
     }
+    // Handles the actions of toolbar buttons
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.action_profile:
+                intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -103,19 +116,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-        }
-    }
-
-    // Hoitaa yläpalkin napin toiminnan
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_profile:
-                Toast.makeText(this, "Here is your profile!", Toast.LENGTH_SHORT).show();
-                System.out.println("How many lakes loaded !!!!!!!!!!!!!!!!:" + manager.getLakes().size());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 }

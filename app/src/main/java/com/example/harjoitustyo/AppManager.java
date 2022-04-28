@@ -50,7 +50,7 @@ public class AppManager {
                     lakes.add(lake);
                 }
                 URL newUrl = new URL(jObj.getString("odata.nextLink"));
-                readJSON(newUrl);
+                //readJSON(newUrl);
 
             } catch (JSONException e) {
                 e.printStackTrace();
