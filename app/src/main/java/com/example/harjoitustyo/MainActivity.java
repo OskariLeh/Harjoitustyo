@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     AppManager manager = new AppManager();
     RecyclerViewAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
+    boolean loggedIn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +63,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Hoitaa sivupalkin toiminnan
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Intent intent = new Intent(MainActivity.this, LakeChosenActivity.class);
+        Intent intent;
 
         switch (item.getItemId()) {
             case R.id.nav_home:
+                intent = new Intent(MainActivity.this, LakeChosenActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -103,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.action_profile:
                 intent = new Intent(MainActivity.this, ProfileActivity.class);
+                intent.putExtra("key", loggedIn);
                 startActivity(intent);
                 return true;
             default:
