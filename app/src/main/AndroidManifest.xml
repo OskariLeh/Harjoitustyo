@@ -17,6 +17,9 @@
             android:exported="false"
             android:theme="@style/Theme.Harjoitustyo.NoActionBar"/>
         <activity
+            android:name=".LogActivity"
+            android:exported="false" />
+        <activity
             android:name=".LakeChosenActivity"
             android:exported="false"
             android:theme="@style/Theme.Harjoitustyo.NoActionBar"/>

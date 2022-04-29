@@ -9,6 +9,6 @@ public class LakeChosenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lake);
+        setContentView(R.layout.activity_lake2);
     }
 }

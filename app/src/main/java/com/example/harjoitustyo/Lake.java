@@ -1,6 +1,8 @@
 package com.example.harjoitustyo;
 
-public class Lake {
+import java.io.Serializable;
+
+public class Lake implements Serializable {
     private String name;
     private int id;
     private String town;

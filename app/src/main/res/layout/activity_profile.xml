@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/bg_color"
     tools:context=".ProfileActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -27,7 +28,7 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.005"

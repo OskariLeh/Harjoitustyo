@@ -1,6 +1,7 @@
 package com.example.harjoitustyo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -48,6 +50,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View view) {
                 Lake lake = lakes.get(holder.getAdapterPosition());
                 Toast.makeText(context, lake.getName(), Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(context, LakeChosenActivity.class);
+                intent.putExtra("lake", lake);
+
+                ActivityLoader loader = new ActivityLoader();
+                loader.loadActivity(intent, context);
             }
         });
     }
@@ -101,6 +109,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             townName = itemView.findViewById(R.id.town_name);
             lakeName = itemView.findViewById(R.id.lake_name);
             relativeLayout = itemView.findViewById(R.id.relative_layout);
+        }
+    }
+
+    public  static class ActivityLoader extends AppCompatActivity {
+
+        public void loadActivity(Intent intent, Context context) {
+            context.startActivity(intent);
         }
     }
 }
