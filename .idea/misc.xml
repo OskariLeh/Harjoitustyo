@@ -3,23 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/drawable/account.xml" value="0.2985" />
-        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/drawable/background.xml" value="0.2985" />
-        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2985" />
-        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_lake.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_lake2.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_log.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_profile.xml" value="0.22" />
-        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_trips.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/fragment_login.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/lake_list_item.xml" value="0.33" />
-        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/layout_lakelist_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/nav_header.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/trip_list_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/menu/draw_menu.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Osku/AndroidStudioProjects/Harjoitustyo/app/src/main/res/menu/menu_toolbar.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/riikk/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_chosen_trip.xml" value="0.268" />
+        <entry key="..\:/Users/riikk/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_lake.xml" value="0.12735595045772752" />
+        <entry key="..\:/Users/riikk/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_lake2.xml" value="0.3" />
+        <entry key="..\:/Users/riikk/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_log.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/riikk/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_main.xml" value="0.24320652173913043" />
+        <entry key="..\:/Users/riikk/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_profile.xml" value="0.132" />
+        <entry key="..\:/Users/riikk/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_trips.xml" value="0.268" />
+        <entry key="..\:/Users/riikk/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/activity_trips_logged.xml" value="0.268" />
+        <entry key="..\:/Users/riikk/AndroidStudioProjects/Harjoitustyo/app/src/main/res/layout/lake_list_item.xml" value="0.268" />
+        <entry key="..\:/Users/riikk/AndroidStudioProjects/Harjoitustyo/app/src/main/res/menu/draw_menu.xml" value="0.268" />
       </map>
     </option>
   </component>
