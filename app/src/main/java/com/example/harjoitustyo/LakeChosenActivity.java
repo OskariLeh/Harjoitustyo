@@ -24,6 +24,7 @@ public class LakeChosenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lake2);
+        lake = (Lake) getIntent().getSerializableExtra("lake");
 
         name = findViewById(R.id.name);
         name.setText(lake.getName());
