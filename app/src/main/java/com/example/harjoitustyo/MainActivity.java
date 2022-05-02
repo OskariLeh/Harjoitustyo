@@ -70,6 +70,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(MainActivity.this, LakeChosenActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_trips:
+                intent= new Intent(MainActivity.this, TripViewActivity.class);
+                startActivity(intent);
+                break;
+
         }
 
         drawer.closeDrawer(GravityCompat.START);
