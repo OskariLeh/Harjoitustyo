@@ -19,6 +19,7 @@ public class LakeChosenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lake2);
 
+        //hehee
         name = findViewById(R.id.name);
         lake = (Lake) getIntent().getSerializableExtra("lake");
         name.setText(lake.getName());
