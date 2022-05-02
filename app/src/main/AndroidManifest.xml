@@ -14,11 +14,11 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".TripViewActivity"
+            android:name=".ProfileActivity"
             android:exported="false"
             android:theme="@style/Theme.Harjoitustyo.NoActionBar"/>
         <activity
-            android:name=".ProfileActivity"
+            android:name=".TripViewActivity"
             android:exported="false"
             android:theme="@style/Theme.Harjoitustyo.NoActionBar"/>
         <activity

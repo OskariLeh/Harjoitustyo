@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     AppManager manager = new AppManager();
     LakeRecyclerViewAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
-    boolean loggedIn = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_trips:
                 intent= new Intent(MainActivity.this, TripViewActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 0);
                 break;
 
         }
@@ -108,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.action_profile:
                 intent = new Intent(MainActivity.this, ProfileActivity.class);
-                intent.putExtra("key", loggedIn);
                 startActivity(intent);
                 return true;
             default:

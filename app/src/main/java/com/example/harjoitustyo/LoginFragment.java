@@ -7,10 +7,16 @@ import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EdgeEffect;
+import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,12 +30,14 @@ public class LoginFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    EditText pwd;
+    EditText uName;
+    Button loginButton;
+    UserManager manager;
+    TextView infoText;
+    TextView signUpText;
 
     public LoginFragment() {
-        // Required empty public constructor
     }
 
     /**
@@ -54,17 +62,45 @@ public class LoginFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            manager = (UserManager) getArguments().getSerializable("manager");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        View v = inflater.inflate(R.layout.fragment_login, container, false);
+        pwd = v.findViewById(R.id.edit_login_password);
+        uName = v.findViewById(R.id.edit_login_uName);
+        infoText = v.findViewById(R.id.infoTextLogin);
+        signUpText = v.findViewById(R.id.text_signUp);
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view == v.findViewById(R.id.button_login)) {
+                    System.out.println("Button pressed");
+                    infoText.setText(manager.loginCheck(uName.getText().toString(), pwd.getText().toString()));
+                    Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                } else if (view == v.findViewById(R.id.text_signUp)) {
+                    Fragment fragment = new SignUpFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("manager", manager);
+                    fragment.setArguments(bundle);
+                    FragmentManager fManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fManager.beginTransaction();
+                    transaction.replace(R.id.fragmentContainer, fragment);
+                    transaction.commit();
+                }
+            }
+        };
+        signUpText.setOnClickListener(listener);
+        loginButton = v.findViewById(R.id.button_login);
+        loginButton.setOnClickListener(listener);
+        return v;
     }
+
+
 
     @Override
     public void onAttach(@NonNull Context context) {

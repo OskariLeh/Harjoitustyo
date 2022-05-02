@@ -31,7 +31,7 @@ public class TripViewActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view_trip);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        adapter = new TripRecyclerViewAdapter(); //what to inside the ()?
+        //adapter = new TripRecyclerViewAdapter(TripViewActivity.this); //what to inside the ()?
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

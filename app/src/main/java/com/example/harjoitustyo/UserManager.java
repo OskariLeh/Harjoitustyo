@@ -1,19 +1,10 @@
+
+
 package com.example.harjoitustyo;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Xml;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -22,15 +13,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlSerializer;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
@@ -38,28 +25,16 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-public class ProfileActivity extends AppCompatActivity {
-
-    Toolbar toolbar;
-    TextView profileName;
-    TextView tvErrors;
-
-    EditText etN;
-    EditText etPw;
-    EditText etE;
+public class UserManager implements Serializable {
+    private boolean loggedIn = false;
     Context context = null;
     Document xmlDoc;
     ArrayList<User> users = new ArrayList<User>();
+    User user;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-        context = ProfileActivity.this;
-        etN = findViewById(R.id.etName);
-        etPw = findViewById(R.id.etPasswd);
-        etE = findViewById(R.id.etEmail);
-        tvErrors = findViewById(R.id.tvError);
+    public UserManager(Context context){
+        this.context = context;
+
 
         InputStream ins = null;
         try {
@@ -94,37 +69,16 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
-        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
-        return true;
-    }
-    // Handles the actions of toolbar buttons
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.action_profile:
 
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public void addUser(View v) {
-
-        String name = etN.getText().toString();
-        String pw = etPw.getText().toString();
-        String email = etE.getText().toString();
+    public String addUser(String name, String pw, String email) {
+        String error = "";
+        System.out.println(context.getFilesDir());
         Boolean newUser = true;
         for (User user : users) {
             if (user.getName().toString().contentEquals(name)){
                 System.out.println("Käyttäjä "+user.getName().toString()+ " on jo olemassa");
-                tvErrors.setText("User "+user.getName().toString()+ " already exists");
+                error = ("User "+user.getName().toString()+ " already exists");
                 newUser = false;
-                break;
             }
         }
         if (newUser) {
@@ -170,33 +124,36 @@ public class ProfileActivity extends AppCompatActivity {
                 osw = new OutputStreamWriter(context.openFileOutput(fname,Context.MODE_PRIVATE));
                 osw.write("");
                 osw.close();
-                tvErrors.setText("User "+ name +" created!");
-
+                error = ("User "+ name +" created!");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
+        return error;
     }
 
-    public void loginCheck(View v) {
-        String name = etN.getText().toString();
-        String pw = etPw.getText().toString();
-        //System.out.println(context.getFilesDir());
+    public String loginCheck(String name, String pw) {
+        String error = "";
         for (User user : users) {
             String qname = user.getName().toString();
             String qpass = user.getPasscode().toString();
             if (name.contentEquals(qname)) {
                 if (pw.contentEquals(qpass)) {
                     System.out.println("Login ok!");
-                    tvErrors.setText("Login ok!");
+                    this.user = user;
+                    error = ("Login ok!");
+                    loggedIn = true;
                     break;
                 } else {
                     System.out.println("Wrong pw");
-                    tvErrors.setText("Wrong password");
-                    break;
+                    error = ("Wrong password");
                 }
             }
         }
+        return error;
     }
+
+    public boolean getLoggedIn() {return loggedIn;}
 }
+
+

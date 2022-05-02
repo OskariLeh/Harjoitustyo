@@ -19,22 +19,25 @@ public class ProfileActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView profileName;
     private boolean loggedIn;
+    UserManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        manager = new UserManager(ProfileActivity.this);
 
         profileName = findViewById(R.id.textProfileName);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        loggedIn = getIntent().getBooleanExtra("key", false);
+        loggedIn = manager.getLoggedIn();
 
         System.out.println(loggedIn);
 
         if (!loggedIn) {
             System.out.println("kökkö");
             Fragment fragment = new LoginFragment();
+            sendManagerToFragment(fragment);
             FragmentManager fManager = getSupportFragmentManager();
             FragmentTransaction transaction = fManager.beginTransaction();
             transaction.replace(R.id.fragmentContainer, fragment);
@@ -62,5 +65,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
     public void closeActivity(){
         finish();
+    }
+
+    public void sendManagerToFragment(Fragment fragment){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("manager", manager);
+        fragment.setArguments(bundle);
     }
 }
