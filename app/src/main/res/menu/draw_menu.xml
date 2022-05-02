@@ -14,5 +14,10 @@
             android:icon="@drawable/ic_baseline_home_24"
             android:id="@+id/nav_home"
             />
+        <item
+            android:title="Trips"
+            android:icon="@drawable/ic_baseline_bookmark_add_24"
+            android:id="@+id/nav_trips"
+            />
     </group>
 </menu>

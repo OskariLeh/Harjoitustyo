@@ -62,12 +62,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Hoitaa sivupalkin toiminnan
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Intent intent = new Intent(MainActivity.this, LakeChosenActivity.class);
+        Intent intent;
 
         switch (item.getItemId()) {
             case R.id.nav_home:
+                intent = new Intent(MainActivity.this, LakeChosenActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_trips:
+                intent= new Intent(MainActivity.this, TripViewActivity.class);
+                startActivity(intent);
+                break;
+
         }
 
         drawer.closeDrawer(GravityCompat.START);
