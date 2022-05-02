@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,14 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
+public class LakeRecyclerViewAdapter extends RecyclerView.Adapter<LakeRecyclerViewAdapter.ViewHolder> implements Filterable {
     private List<Lake> lakes ;
     private List<Lake> lakesCopy ;
     private Context context;
 
-    public RecyclerViewAdapter(List<Lake> lakes, Context context) {
+    public LakeRecyclerViewAdapter(List<Lake> lakes, Context context) {
         this.lakes = lakes;
         this.context = context;
         lakesCopy = new ArrayList<>(lakes);

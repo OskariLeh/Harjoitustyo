@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Harjoitustyo"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".TripViewActivity"
             android:exported="false"

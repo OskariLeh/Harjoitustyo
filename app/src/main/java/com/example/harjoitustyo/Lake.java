@@ -8,8 +8,8 @@ public class Lake implements Serializable {
     private String town;
     private String drainageBasin;
 
-    private String cordLong;
-    private String cordLat;
+    private Double cordLong;
+    private Double cordLat;
     private double averageDepth;
     private double areaOfLake;
 
@@ -27,8 +27,8 @@ public class Lake implements Serializable {
         this.drainageBasin = drainageBasin;
     }
     public void setCordinates(String cordLong, String cordLat) {
-        this.cordLong = cordLong;
-        this.cordLat = cordLat;
+        this.cordLong = Double.parseDouble(cordLong);
+        this.cordLat = Double.parseDouble(cordLat);
     }
     public void setAverageDepth(double averageDepth) {
         this.averageDepth = averageDepth;
@@ -51,8 +51,8 @@ public class Lake implements Serializable {
     public String getDrainageBasin() {
         return drainageBasin;
     }
-    public String getCordLong() {return cordLong;}
-    public String getCordLat() {
+    public Double getCordLong() {return cordLong;}
+    public Double getCordLat() {
         return cordLat;
     }
     /*TODO missä muodossa halutaan koordinaatit ulos? Lisäsin nuo getterit, käsittääkseni oikeassa muodossa noinkin.*/

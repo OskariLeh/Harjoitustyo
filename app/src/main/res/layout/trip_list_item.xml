@@ -7,13 +7,13 @@
     app:cardCornerRadius="5dp">
 
     <RelativeLayout
-        android:id="@+id/relative_layout"
+        android:id="@+id/relative_layout_trip"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/image_trip"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:padding="2dp"
@@ -21,23 +21,23 @@
             />
 
         <TextView
-            android:id="@+id/lake_name"
+            android:id="@+id/lake_name_trip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/image_trip"
             android:text="Lake name"
             android:textColor="@color/black"
-            android:textSize="20dp"
-            android:layout_toRightOf="@+id/image"/>
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/trip_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lake_name"
+            android:layout_below="@+id/lake_name_trip"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="0dp"
-            android:layout_toRightOf="@+id/image"
+            android:layout_toRightOf="@+id/image_trip"
             android:text="Trip date"
             android:textSize="15dp" />
 
@@ -45,7 +45,7 @@
             android:id="@+id/trip_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lake_name"
+            android:layout_below="@+id/lake_name_trip"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="0dp"
             android:layout_toRightOf="@id/trip_date"
@@ -56,11 +56,11 @@
             android:id="@+id/lake_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lake_name"
+            android:layout_below="@+id/lake_name_trip"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="0dp"
             android:layout_toRightOf="@id/trip_duration"
-            android:text="trip_duration"
+            android:text="lake location"
             android:textSize="15dp" />
     </RelativeLayout>
 

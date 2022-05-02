@@ -1,8 +1,9 @@
 package com.example.harjoitustyo;
 
+import java.io.Serializable;
 import java.sql.Time;
 
-public class Trip {
+public class Trip implements Serializable {
     private Time time;
     private Lake lake;
     private String description = "";

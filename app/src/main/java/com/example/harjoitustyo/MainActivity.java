@@ -18,8 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 
 import com.google.android.material.navigation.NavigationView;
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView nav;
     RecyclerView recyclerView;
     AppManager manager = new AppManager();
-    RecyclerViewAdapter adapter;
+    LakeRecyclerViewAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
     boolean loggedIn = false;
 
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView = findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
-        adapter = new RecyclerViewAdapter(manager.getLakes(), MainActivity.this);
+        adapter = new LakeRecyclerViewAdapter(manager.getLakes(), MainActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }

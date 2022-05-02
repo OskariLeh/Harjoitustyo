@@ -20,42 +20,47 @@ import java.util.List;
 
 public class AppManager {
     private List<Lake> lakes = new ArrayList<Lake>();
+    private  List<Trip> trips = new ArrayList<Trip>();
+
+
     public List<Lake> getLakes() {
         return lakes;
     }
 
 
     public void readJSON(){
-        String json = getJSON();
+        if (lakes.isEmpty()) {
+            String json = getJSON();
 
-        if (json != null) {
-            try {
-                JSONObject jObj = new JSONObject(json);
-                JSONArray jsonArray = jObj.getJSONArray("value");
+            if (json != null) {
+                try {
+                    JSONObject jObj = new JSONObject(json);
+                    JSONArray jsonArray = jObj.getJSONArray("value");
 
-                for (int i=0; i<jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    Lake lake = new Lake();
-                    lake.setId(Integer.parseInt(jsonObject.getString("Jarvi_Id")));
-                    lake.setName(jsonObject.getString("Nimi"));
-                    lake.setTown(jsonObject.getString("KuntaNimi"));
-                    if (jsonObject.getString("Vesiala") != "null") {
-                        lake.setAreaOfLake(Double.parseDouble(jsonObject.getString("Vesiala")));
+                    for (int i=0; i<jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        Lake lake = new Lake();
+                        lake.setId(Integer.parseInt(jsonObject.getString("Jarvi_Id")));
+                        lake.setName(jsonObject.getString("Nimi"));
+                        lake.setTown(jsonObject.getString("KuntaNimi"));
+                        if (jsonObject.getString("Vesiala") != "null") {
+                            lake.setAreaOfLake(Double.parseDouble(jsonObject.getString("Vesiala")));
+                        }
+                        lake.setCordinates(jsonObject.getString("KoordErLat"), jsonObject.getString("KoordErLong"));
+                        if (jsonObject.getString("SyvyysKeski") != "null") {
+                            lake.setAverageDepth(Double.parseDouble(jsonObject.getString("SyvyysKeski")));
+                        }
+                        lake.setDrainageBasin(jsonObject.getString("VesalNimi"));
+                        lakes.add(lake);
                     }
-                    lake.setCordinates(jsonObject.getString("KoordErLat"), jsonObject.getString("KoordErLong"));
-                    if (jsonObject.getString("SyvyysKeski") != "null") {
-                        lake.setAverageDepth(Double.parseDouble(jsonObject.getString("SyvyysKeski")));
-                    }
-                    lake.setDrainageBasin(jsonObject.getString("VesalNimi"));
-                    lakes.add(lake);
+                    URL newUrl = new URL(jObj.getString("odata.nextLink"));
+                    //readJSON(newUrl);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
                 }
-                URL newUrl = new URL(jObj.getString("odata.nextLink"));
-                //readJSON(newUrl);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             }
         }
     }
