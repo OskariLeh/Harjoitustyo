@@ -51,7 +51,11 @@ public class Lake implements Serializable {
     public String getDrainageBasin() {
         return drainageBasin;
     }
-    /*TODO missä muodossa halutaan koordinaatit ulos? */
+    public String getCordLong() {return cordLong;}
+    public String getCordLat() {
+        return cordLat;
+    }
+    /*TODO missä muodossa halutaan koordinaatit ulos? Lisäsin nuo getterit, käsittääkseni oikeassa muodossa noinkin.*/
 
     public double getAverageDepth() {
         return averageDepth;
