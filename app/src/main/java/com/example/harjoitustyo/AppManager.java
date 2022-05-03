@@ -177,12 +177,13 @@ public class AppManager {
         return response;
     }
 
-    public void getTrips(User user) {
+    public void getTripsAndFavorites(User user) {
         InputStream ins = null;
         Document xmlDoc;
-        String username = user.getName().toString();
+        String username = user.getName().toString(); //TODO jostain tähän tarvii saada käyttäjänimi
         String fname = username + ".xml";
 
+        //adding trips to list from XML
         try {
             ins = context.openFileInput(fname);
             DocumentBuilder docB = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -191,30 +192,39 @@ public class AppManager {
             for (Integer i = 0; i < nList.getLength(); i++) {
                 Node node = nList.item(i);
                 Element element = (Element) node;
-                String lake = element.getElementsByTagName("lake").item(0).getTextContent();
-                String town = element.getElementsByTagName("town").item(0).getTextContent();
-                String description = element.getElementsByTagName("desc").item(0).getTextContent();
+                String lakeID = element.getElementsByTagName("lakeID").item(0).getTextContent();
                 String time = element.getElementsByTagName("time").item(0).getTextContent();
+                String description = element.getElementsByTagName("desc").item(0).getTextContent();
+                String duration = element.getElementsByTagName("duration").item(0).getTextContent();
 
                 Trip trip = new Trip();
+                for (Lake lake : lakes) {
+                    if(String.valueOf(lake.getId()).contentEquals(lakeID)){
+                        trip.setLake(lake); //TODO näin saatais hyödynnettyy olemassa olevia järvi-olioita
+                        break;
+                    }
+                }
                 trip.setDescription(description);
-                //trip.setTime(time); //TODO time muunnos?
-                //trip.setLake(lake); //TODO laitetaanko reissuun kaikki järven tiedot vai haetaanko tässä esim id:n perusteella oikea ja linkitetään se tähän?
-                trip.setDuration("kesto"); //TODO mistä tää tulee?
+                trip.setTime(time); //TODO time muoto?
+                trip.setDuration(duration);
 
                 trips.add(trip);
 
             }
 
+            //adding favorites to list from XML
             nList = xmlDoc.getElementsByTagName("favorite");
             for (Integer i = 0; i < nList.getLength(); i++) {
                 Node node = nList.item(i);
                 Element element = (Element) node;
-                String lake = element.getElementsByTagName("lake").item(0).getTextContent();
-
-                favorites.add(lake); //TODO miten tää?
+                String lakeID = element.getElementsByTagName("lakeID").item(0).getTextContent();
+                for (Lake lake : lakes){
+                    if(String.valueOf(lake.getId()).contentEquals(lakeID)){
+                        favorites.add(lake);
+                        break; //TODO onko tää järkevä?
+                    }
+                }
             }
-            //System.out.println("Listassa käyttäjiä: " + Integer.toString(i));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (ParserConfigurationException e) {
@@ -226,52 +236,66 @@ public class AppManager {
         }
     }
 
-    public void saveTrips(User user) {
+    public void saveTripsAndFavorites(User user) {
         XmlSerializer serializer = Xml.newSerializer();
         StringWriter writer = new StringWriter();
-        String username = user.getName();
+        String username = user.getName(); //TODO jostain tähän tarvii saada käyttäjänimi
         String fname = username + ".xml";
         try {
             serializer.setOutput(writer);
             serializer.startDocument("UTF-8", true);
             serializer.startTag("","favorites");
+
+            //adding favorites to XML
             for (Lake lake : favorites){
                 serializer.startTag("","favorite");
 
                 serializer.startTag("","name");
-                serializer.text();
+                serializer.text(lake.getName());
                 serializer.endTag("","name");
 
-                //TODO ynnä muut tiedot
+                serializer.startTag("","lakeID");
+                serializer.text(String.valueOf(lake.getId()));
+                serializer.endTag("","lakeID");
+
+                //TODO ynnä muut tiedot?
                 serializer.endTag("","favorite");
             }
-            serializer.endTag("",favorites);
-            serializer.startTag("", "trips"); //TODO näille oikeat arvot
+            serializer.endTag("","favorites");
+
+            //adding trips to XML
+            serializer.startTag("", "trips");
 
             for (Trip trip : trips) {
                 serializer.startTag("", "trip");
 
-                serializer.startTag("", "name");
-                serializer.text("");
-                serializer.endTag("", "name");
+                serializer.startTag("", "lakeID");
+                serializer.text(String.valueOf(trip.getLake().getId()));
+                serializer.endTag("", "lakeID");
 
-                serializer.startTag("", "password");
-                serializer.text("");
-                serializer.endTag("", "password");
+                serializer.startTag("", "time");
+                serializer.text(trip.getTime()); //TODO missä muodossa tripin aika tulee?
+                serializer.endTag("", "time");
 
-                serializer.startTag("", "email");
-                serializer.text("");
-                serializer.endTag("", "email");
+                serializer.startTag("", "duration");
+                serializer.text(trip.getDuration());
+                serializer.endTag("", "duration");
+
+                serializer.startTag("", "desc");
+                serializer.text(trip.getDescription());
+                serializer.endTag("", "desc");
 
                 serializer.endTag("", "trip");
 
             }
             serializer.endTag("", "trips");
             serializer.endDocument();
+
             String result = writer.toString();
             OutputStreamWriter osw = new OutputStreamWriter(context.openFileOutput(fname, Context.MODE_PRIVATE));
             osw.write(result);
             osw.close();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

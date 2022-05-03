@@ -11,7 +11,6 @@ public class Trip implements Serializable {
     private String description = "";
 
     public Trip(){
-
     }
 
     public Trip(Time time, Lake lake) {
