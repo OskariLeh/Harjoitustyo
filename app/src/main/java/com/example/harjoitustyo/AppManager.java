@@ -37,6 +37,7 @@ import javax.xml.parsers.ParserConfigurationException;
 public class AppManager {
     private List<Lake> lakes = new ArrayList<Lake>();
     private List<Trip> trips = new ArrayList<Trip>();
+    private List<Lake> favorites = new ArrayList<>();
     Context context = null;
 
 
@@ -187,8 +188,7 @@ public class AppManager {
             DocumentBuilder docB = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             xmlDoc = docB.parse(ins);
             NodeList nList = xmlDoc.getElementsByTagName("trip");
-            Integer i;
-            for (i = 0; i < nList.getLength(); i++) {
+            for (Integer i = 0; i < nList.getLength(); i++) {
                 Node node = nList.item(i);
                 Element element = (Element) node;
                 String lake = element.getElementsByTagName("lake").item(0).getTextContent();
@@ -204,6 +204,15 @@ public class AppManager {
 
                 trips.add(trip);
 
+            }
+
+            nList = xmlDoc.getElementsByTagName("favorite");
+            for (Integer i = 0; i < nList.getLength(); i++) {
+                Node node = nList.item(i);
+                Element element = (Element) node;
+                String lake = element.getElementsByTagName("lake").item(0).getTextContent();
+
+                favorites.add(lake); //TODO miten tää?
             }
             //System.out.println("Listassa käyttäjiä: " + Integer.toString(i));
         } catch (FileNotFoundException e) {
@@ -225,6 +234,18 @@ public class AppManager {
         try {
             serializer.setOutput(writer);
             serializer.startDocument("UTF-8", true);
+            serializer.startTag("","favorites");
+            for (Lake lake : favorites){
+                serializer.startTag("","favorite");
+
+                serializer.startTag("","name");
+                serializer.text();
+                serializer.endTag("","name");
+
+                //TODO ynnä muut tiedot
+                serializer.endTag("","favorite");
+            }
+            serializer.endTag("",favorites);
             serializer.startTag("", "trips"); //TODO näille oikeat arvot
 
             for (Trip trip : trips) {
