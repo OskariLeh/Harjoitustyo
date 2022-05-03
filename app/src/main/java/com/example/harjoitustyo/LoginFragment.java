@@ -42,6 +42,8 @@ public class LoginFragment extends Fragment {
     public LoginFragment() {
     }
 
+    // Fragment that opens for logging in Oskari Lehtonen
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.

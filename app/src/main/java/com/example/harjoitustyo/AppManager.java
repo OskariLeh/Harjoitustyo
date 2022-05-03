@@ -54,6 +54,7 @@ public class AppManager implements Serializable {
         this.context = context;
     }
 
+    //reads first json file. Oskari Lehtonen
     public void readJSON(){
         if (lakes.isEmpty()) {
             String json = getJSON();
@@ -80,7 +81,7 @@ public class AppManager implements Serializable {
                         lakes.add(lake);
                     }
                     URL newUrl = new URL(jObj.getString("odata.nextLink"));
-                    //readJSON(newUrl);
+                    readJSON(newUrl);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -91,6 +92,7 @@ public class AppManager implements Serializable {
         }
     }
 
+    //Reads rest of the json files. Oskari Lehtonen
     public void readJSON(URL url){
         String json = getJSON(url);
 
@@ -133,7 +135,7 @@ public class AppManager implements Serializable {
     }
 
 
-    // Gets JSON file returns it as text
+    // Gets JSON file returns it as text Oskari Lehtonen
     public String getJSON() {
         String response = null;
         try {
@@ -159,6 +161,8 @@ public class AppManager implements Serializable {
         }
         return response;
     }
+
+    // Reads rest of the files returns as text Oskari Lehtonen
     public String getJSON(URL url) {
         String response = null;
         try {

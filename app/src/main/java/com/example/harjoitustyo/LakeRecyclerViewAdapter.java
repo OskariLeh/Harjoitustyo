@@ -24,6 +24,7 @@ public class LakeRecyclerViewAdapter extends RecyclerView.Adapter<LakeRecyclerVi
     private Context context;
     UserManager userManager;
 
+    // Adapter class for recycler view Oskari Lehtonen
 
     public LakeRecyclerViewAdapter(List<Lake> lakes, Context context, UserManager userManager) {
         this.lakes = lakes;
