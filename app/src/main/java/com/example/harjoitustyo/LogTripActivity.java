@@ -38,6 +38,7 @@ public class LogTripActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (view == findViewById(R.id.buttonAddTrip)) {
                     Trip trip = new Trip(lake.getName(), description.getText().toString(), duration.getText().toString(), time.getText().toString());
+                    appManager.getTripsAndFavorites(userManager.getUser());
                     appManager.addTrip(trip);
                     appManager.saveTripsAndFavorites(userManager.getUser());
                 }
