@@ -1,15 +1,27 @@
 package com.example.harjoitustyo;
 
+import android.content.Context;
+import android.util.Xml;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -18,9 +30,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 public class AppManager {
     private List<Lake> lakes = new ArrayList<Lake>();
-    private  List<Trip> trips = new ArrayList<Trip>();
+    private List<Trip> trips = new ArrayList<Trip>();
+    Context context = null;
 
 
     public List<Lake> getLakes() {
@@ -28,7 +45,7 @@ public class AppManager {
     }
 
 
-    public void readJSON(){
+    public void readJSON() {
         if (lakes.isEmpty()) {
             String json = getJSON();
 
@@ -37,7 +54,7 @@ public class AppManager {
                     JSONObject jObj = new JSONObject(json);
                     JSONArray jsonArray = jObj.getJSONArray("value");
 
-                    for (int i=0; i<jsonArray.length(); i++) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         Lake lake = new Lake();
                         lake.setId(Integer.parseInt(jsonObject.getString("Jarvi_Id")));
@@ -65,15 +82,15 @@ public class AppManager {
         }
     }
 
-    public void readJSON(URL url){
+    public void readJSON(URL url) {
         String json = getJSON(url);
 
-        if (json != null ) {
+        if (json != null) {
             try {
                 JSONObject jObj = new JSONObject(json);
                 JSONArray jsonArray = jObj.getJSONArray("value");
 
-                for (int i=0; i<jsonArray.length(); i++) {
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     Lake lake = new Lake();
                     lake.setId(Integer.parseInt(jsonObject.getString("Jarvi_Id")));
@@ -133,6 +150,7 @@ public class AppManager {
         }
         return response;
     }
+
     public String getJSON(URL url) {
         String response = null;
         try {
@@ -156,5 +174,85 @@ public class AppManager {
             e.printStackTrace();
         }
         return response;
+    }
+
+    public void getTrips(User user) {
+        InputStream ins = null;
+        Document xmlDoc;
+        String username = user.getName().toString();
+        String fname = username + ".xml";
+
+        try {
+            ins = context.openFileInput(fname);
+            DocumentBuilder docB = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            xmlDoc = docB.parse(ins);
+            NodeList nList = xmlDoc.getElementsByTagName("trip");
+            Integer i;
+            for (i = 0; i < nList.getLength(); i++) {
+                Node node = nList.item(i);
+                Element element = (Element) node;
+                String lake = element.getElementsByTagName("lake").item(0).getTextContent();
+                String town = element.getElementsByTagName("town").item(0).getTextContent();
+                String description = element.getElementsByTagName("desc").item(0).getTextContent();
+                String time = element.getElementsByTagName("time").item(0).getTextContent();
+
+                Trip trip = new Trip();
+                trip.setDescription(description);
+                trip.setTime(time); //TODO time muunnos?
+                trip.setLake(lake); //TODO laitetaanko reissuun kaikki järven tiedot vai haetaanko tässä esim id:n perusteella oikea ja linkitetään se tähän?
+                trip.setDuration("kesto"); //TODO mistä tää tulee?
+
+                trips.add(trip);
+
+            }
+            //System.out.println("Listassa käyttäjiä: " + Integer.toString(i));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveTrips() {
+        XmlSerializer serializer = Xml.newSerializer();
+        StringWriter writer = new StringWriter();
+        try {
+            serializer.setOutput(writer);
+            serializer.startDocument("UTF-8", true);
+            serializer.startTag("", "trips"); //TODO näille oikeat arvot
+
+            for (Trip trip : trips) {
+                serializer.startTag("", "trip");
+
+                serializer.startTag("", "name");
+                serializer.text("");
+                serializer.endTag("", "name");
+
+                serializer.startTag("", "password");
+                serializer.text("");
+                serializer.endTag("", "password");
+
+                serializer.startTag("", "email");
+                serializer.text("");
+                serializer.endTag("", "email");
+
+                serializer.endTag("", "trip");
+
+            }
+            serializer.endTag("", "trips");
+            serializer.endDocument();
+            String result = writer.toString();
+            OutputStreamWriter osw = new OutputStreamWriter(context.openFileOutput("userdata.xml", Context.MODE_PRIVATE));
+            osw.write(result);
+            osw.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

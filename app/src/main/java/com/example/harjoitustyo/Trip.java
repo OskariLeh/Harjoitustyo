@@ -10,6 +10,10 @@ public class Trip implements Serializable {
     private String duration = "";
     private String description = "";
 
+    public Trip(){
+
+    }
+
     public Trip(Time time, Lake lake) {
         this.time = time;
         this.lake = lake;
@@ -29,7 +33,7 @@ public class Trip implements Serializable {
     public Lake getLake() {
         return lake;
     }
-    public Duration getDuration() {return duration;}
+    public String getDuration() {return duration;}
     public String getDescription() {
         return description;
     }

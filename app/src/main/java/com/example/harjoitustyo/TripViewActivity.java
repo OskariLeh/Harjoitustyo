@@ -31,7 +31,7 @@ public class TripViewActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view_trip);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        //adapter = new TripRecyclerViewAdapter(TripViewActivity.this); //what to inside the ()?
+        //TODO adapter = new TripRecyclerViewAdapter(TripViewActivity.this); //what to inside the ()?
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -40,10 +40,10 @@ public class TripViewActivity extends AppCompatActivity {
         name.setText(lake.getName());
 
         date = findViewById(R.id.trip_date);
-        date.setText(trip.getTime());
+        date.setText(trip.getTime().toString());
 
         duration = findViewById(R.id.trip_duration);
-        duration.setText(trip.getDuration());
+        //TODO duration.setText(trip.getDuration());
 
         location = findViewById(R.id.lake_location);
         location.setText(lake.getTown());
