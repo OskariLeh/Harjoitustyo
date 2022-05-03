@@ -81,6 +81,15 @@ public class UserManager implements Serializable {
                 newUser = false;
             }
         }
+        if (pw.isEmpty()){
+            error = "Add password";
+            newUser = false;
+        }
+        if (email.isEmpty()){
+            error = "Add email";
+            newUser = false;
+        }
+
         if (newUser) {
             User user = new User();
             user.setName(name);
@@ -135,8 +144,9 @@ public class UserManager implements Serializable {
     public String loginCheck(String name, String pw) {
         String error = "";
         for (User user : users) {
-            String qname = user.getName().toString();
-            String qpass = user.getPasscode().toString();
+            String qname = user.getName();
+            String qpass = user.getPasscode();
+            String qmail = user.getEmail();
             if (name.contentEquals(qname)) {
                 if (pw.contentEquals(qpass)) {
                     System.out.println("Login ok!");
@@ -148,6 +158,21 @@ public class UserManager implements Serializable {
                     System.out.println("Wrong pw");
                     error = ("Wrong password");
                 }
+            }
+            else if (name.contentEquals(qmail)){
+                if (pw.contentEquals(qpass)) {
+                    System.out.println("Login ok!");
+                    this.user = user;
+                    error = ("Login ok!");
+                    loggedIn = true;
+                    break;
+                } else {
+                    System.out.println("Wrong pw");
+                    error = ("Wrong password");
+                }
+            }
+            else {
+                error = "No such user found";
             }
         }
         return error;

@@ -43,7 +43,7 @@ public class TripViewActivity extends AppCompatActivity {
         date.setText(trip.getTime().toString());
 
         duration = findViewById(R.id.trip_duration);
-        //TODO duration.setText(trip.getDuration());
+        duration.setText(trip.getDuration());
 
         location = findViewById(R.id.lake_location);
         location.setText(lake.getTown());

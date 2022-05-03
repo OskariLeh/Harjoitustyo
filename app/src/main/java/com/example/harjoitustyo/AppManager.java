@@ -198,8 +198,8 @@ public class AppManager {
 
                 Trip trip = new Trip();
                 trip.setDescription(description);
-                trip.setTime(time); //TODO time muunnos?
-                trip.setLake(lake); //TODO laitetaanko reissuun kaikki järven tiedot vai haetaanko tässä esim id:n perusteella oikea ja linkitetään se tähän?
+                //trip.setTime(time); //TODO time muunnos?
+                //trip.setLake(lake); //TODO laitetaanko reissuun kaikki järven tiedot vai haetaanko tässä esim id:n perusteella oikea ja linkitetään se tähän?
                 trip.setDuration("kesto"); //TODO mistä tää tulee?
 
                 trips.add(trip);
@@ -217,9 +217,11 @@ public class AppManager {
         }
     }
 
-    public void saveTrips() {
+    public void saveTrips(User user) {
         XmlSerializer serializer = Xml.newSerializer();
         StringWriter writer = new StringWriter();
+        String username = user.getName();
+        String fname = username + ".xml";
         try {
             serializer.setOutput(writer);
             serializer.startDocument("UTF-8", true);
@@ -246,7 +248,7 @@ public class AppManager {
             serializer.endTag("", "trips");
             serializer.endDocument();
             String result = writer.toString();
-            OutputStreamWriter osw = new OutputStreamWriter(context.openFileOutput("userdata.xml", Context.MODE_PRIVATE));
+            OutputStreamWriter osw = new OutputStreamWriter(context.openFileOutput(fname, Context.MODE_PRIVATE));
             osw.write(result);
             osw.close();
         } catch (FileNotFoundException e) {

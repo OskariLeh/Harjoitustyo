@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +28,7 @@ public class SignUpFragment extends Fragment {
     EditText pwd;
     EditText email;
     Button signUpButton;
+    TextView tvError;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -66,7 +68,7 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (view == v.findViewById(R.id.sign_up_button)){
-                    manager.addUser(uName.getText().toString(), pwd.getText().toString(), email.toString().toString());
+                    tvError.setText(manager.addUser(uName.getText().toString(), pwd.getText().toString(), email.getText().toString()));
 
                 }
             }
@@ -76,6 +78,7 @@ public class SignUpFragment extends Fragment {
         email = v.findViewById(R.id.sign_up_email);
         signUpButton = v.findViewById(R.id.sign_up_button);
         signUpButton.setOnClickListener(listener);
+        tvError = v.findViewById(R.id.tvError);
 
         return v;
     }
