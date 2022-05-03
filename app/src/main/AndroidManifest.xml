@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Harjoitustyo"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".LogTripActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Harjoitustyo.NoActionBar"/>
         <activity
             android:name=".ProfileActivity"
             android:exported="false"
@@ -23,7 +26,8 @@
             android:theme="@style/Theme.Harjoitustyo.NoActionBar"/>
         <activity
             android:name=".LogActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Harjoitustyo.NoActionBar"/>
         <activity
             android:name=".LakeChosenActivity"
             android:exported="false"

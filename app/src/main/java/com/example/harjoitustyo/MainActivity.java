@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (resultCode == RESULT_OK) {
                 userManager = (UserManager) data.getSerializableExtra("manager");
                 System.out.println("Found Extra");
+
             }
         }else {
             super.onActivityResult(requestCode, resultCode , data);
@@ -145,4 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    public UserManager getUserManager() {
+        return userManager;
+    }
 }

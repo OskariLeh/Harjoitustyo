@@ -22,10 +22,13 @@ public class LakeRecyclerViewAdapter extends RecyclerView.Adapter<LakeRecyclerVi
     private List<Lake> lakes ;
     private List<Lake> lakesCopy ;
     private Context context;
+    private User user;
 
-    public LakeRecyclerViewAdapter(List<Lake> lakes, Context context) {
+
+    public LakeRecyclerViewAdapter(List<Lake> lakes, Context context ) {
         this.lakes = lakes;
         this.context = context;
+        this.user = user;
         lakesCopy = new ArrayList<>(lakes);
     }
 

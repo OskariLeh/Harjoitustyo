@@ -1,16 +1,28 @@
 package com.example.harjoitustyo;
 
+import android.content.Context;
+import android.util.Xml;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -19,10 +31,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 public class AppManager implements Serializable {
     private List<Lake> lakes = new ArrayList<Lake>();
     private  List<Trip> trips = new ArrayList<Trip>();
-
+    private List<Lake> favorites = new ArrayList<>();
+    Context context;
 
     public List<Lake> getLakes() {
         return lakes;
@@ -158,5 +175,130 @@ public class AppManager implements Serializable {
             e.printStackTrace();
         }
         return response;
+    }
+    public void getTripsAndFavorites(User user) {
+        InputStream ins = null;
+        Document xmlDoc;
+        String username = user.getName(); //TODO jostain tähän tarvii saada käyttäjänimi
+        String fname = username + ".xml";
+
+        //adding trips to list from XML
+        try {
+            ins = context.openFileInput(fname);
+            DocumentBuilder docB = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            xmlDoc = docB.parse(ins);
+            NodeList nList = xmlDoc.getElementsByTagName("trip");
+            for (Integer i = 0; i < nList.getLength(); i++) {
+                Node node = nList.item(i);
+                Element element = (Element) node;
+                String lakeID = element.getElementsByTagName("lakeID").item(0).getTextContent();
+                String time = element.getElementsByTagName("time").item(0).getTextContent();
+                String description = element.getElementsByTagName("desc").item(0).getTextContent();
+                String duration = element.getElementsByTagName("duration").item(0).getTextContent();
+
+                Trip trip = new Trip();
+                for (Lake lake : lakes) {
+                    if(String.valueOf(lake.getId()).contentEquals(lakeID)){
+                        trip.setLake(lake); //TODO näin saatais hyödynnettyy olemassa olevia järvi-olioita
+                        break;
+                    }
+                }
+                trip.setDescription(description);
+                //trip.setTime(time); //TODO time muoto?
+                trip.setDuration(duration);
+
+                trips.add(trip);
+
+            }
+
+            //adding favorites to list from XML
+            nList = xmlDoc.getElementsByTagName("favorite");
+            for (Integer i = 0; i < nList.getLength(); i++) {
+                Node node = nList.item(i);
+                Element element = (Element) node;
+                String lakeID = element.getElementsByTagName("lakeID").item(0).getTextContent();
+                for (Lake lake : lakes){
+                    if(String.valueOf(lake.getId()).contentEquals(lakeID)){
+                        favorites.add(lake);
+                        break; //TODO onko tää järkevä?
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveTripsAndFavorites(User user) {
+        XmlSerializer serializer = Xml.newSerializer();
+        StringWriter writer = new StringWriter();
+        String username = user.getName(); //TODO jostain tähän tarvii saada käyttäjänimi
+        String fname = username + ".xml";
+        try {
+            serializer.setOutput(writer);
+            serializer.startDocument("UTF-8", true);
+            serializer.startTag("","favorites");
+
+            //adding favorites to XML
+            for (Lake lake : favorites){
+                serializer.startTag("","favorite");
+
+                serializer.startTag("","name");
+                serializer.text(lake.getName());
+                serializer.endTag("","name");
+
+                serializer.startTag("","lakeID");
+                serializer.text(String.valueOf(lake.getId()));
+                serializer.endTag("","lakeID");
+
+                //TODO ynnä muut tiedot?
+                serializer.endTag("","favorite");
+            }
+            serializer.endTag("","favorites");
+
+            //adding trips to XML
+            serializer.startTag("", "trips");
+
+            for (Trip trip : trips) {
+                serializer.startTag("", "trip");
+
+                serializer.startTag("", "lakeID");
+                serializer.text(String.valueOf(trip.getLake().getId()));
+                serializer.endTag("", "lakeID");
+
+                serializer.startTag("", "time");
+                serializer.text(trip.getTime().toString()); //TODO missä muodossa tripin aika tulee?
+                serializer.endTag("", "time");
+
+                serializer.startTag("", "duration");
+                serializer.text(trip.getDuration());
+                serializer.endTag("", "duration");
+
+                serializer.startTag("", "desc");
+                serializer.text(trip.getDescription());
+                serializer.endTag("", "desc");
+
+                serializer.endTag("", "trip");
+
+            }
+            serializer.endTag("", "trips");
+            serializer.endDocument();
+
+            String result = writer.toString();
+            OutputStreamWriter osw = new OutputStreamWriter(context.openFileOutput(fname, Context.MODE_PRIVATE));
+            osw.write(result);
+            osw.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

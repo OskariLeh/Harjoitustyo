@@ -5,7 +5,7 @@ import java.sql.Time;
 import java.time.Duration;
 
 public class Trip implements Serializable {
-    private Time time;
+    private String time;
     private Lake lake;
     private String duration = "";
     private String description = "";
@@ -13,7 +13,7 @@ public class Trip implements Serializable {
     public Trip(){
     }
 
-    public Trip(Time time, Lake lake) {
+    public Trip(String time, Lake lake) {
         this.time = time;
         this.lake = lake;
     }
@@ -25,7 +25,7 @@ public class Trip implements Serializable {
     }
 
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
     public Lake getLake() {
@@ -36,7 +36,7 @@ public class Trip implements Serializable {
         return description;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
     public void setLake(Lake lake) {

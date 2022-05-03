@@ -2,8 +2,12 @@ package com.example.harjoitustyo;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
@@ -19,12 +23,19 @@ public class LakeChosenActivity extends AppCompatActivity {
     TextView areaOfLake;
     TextView averageDepth;
     Lake lake;
+    ImageButton addTripButton;
+    ImageButton addToFavorites;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lake2);
         lake = (Lake) getIntent().getSerializableExtra("lake");
+        addTripButton = (ImageButton) findViewById(R.id.imageButton4);
+        addToFavorites = (ImageButton) findViewById(R.id.imageButton);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         name = findViewById(R.id.name);
         name.setText(lake.getName());
@@ -43,7 +54,19 @@ public class LakeChosenActivity extends AppCompatActivity {
 
         averageDepth = findViewById(R.id.averageDepth);
         areaOfLake.setText("Keskisyvyys: "+lake.getAverageDepth());
-    }
 
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view == findViewById(R.id.imageButton4)) {
+                    Intent intent = new Intent(LakeChosenActivity.this, LogTripActivity.class);
+                    startActivity(intent);
+                }
+            }
+        };
+
+        addToFavorites.setOnClickListener(listener);
+        addTripButton.setOnClickListener(listener);
+    }
 
 }

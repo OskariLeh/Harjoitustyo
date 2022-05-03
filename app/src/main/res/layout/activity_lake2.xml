@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bg_color"
+    android:orientation="vertical"
     tools:context=".LakeChosenActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -110,6 +110,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:background="@color/bg_color"
+            android:clickable="true"
+            android:contentDescription="Add new trip"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.956"
@@ -122,16 +126,18 @@
             android:id="@+id/imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_baseline_star_outline_24"
-            tools:layout_editor_absoluteX="279dp"
-            tools:layout_editor_absoluteY="11dp"
             android:background="@color/bg_color"
+            android:clickable="true"
+            android:contentDescription="add to favourite"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.867"
+            app:layout_constraintHorizontal_bias="0.826"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.015"/>
+            app:layout_constraintVertical_bias="0.015"
+            app:srcCompat="@drawable/ic_baseline_star_outline_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
