@@ -55,7 +55,6 @@ public class Lake implements Serializable {
     public Double getCordLat() {
         return cordLat;
     }
-    /*TODO missä muodossa halutaan koordinaatit ulos? Lisäsin nuo getterit, käsittääkseni oikeassa muodossa noinkin.*/
 
     public double getAverageDepth() {
         return averageDepth;

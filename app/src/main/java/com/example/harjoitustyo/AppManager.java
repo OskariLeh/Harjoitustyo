@@ -223,7 +223,7 @@ public class AppManager implements Serializable {
                 for (Lake lake : lakes){
                     if(String.valueOf(lake.getId()).contentEquals(lakeID)){
                         favorites.add(lake);
-                        break; //TODO onko tää järkevä?
+                        break;
                     }
                 }
             }
@@ -241,13 +241,14 @@ public class AppManager implements Serializable {
     public void saveTripsAndFavorites(User user) {
         XmlSerializer serializer = Xml.newSerializer();
         StringWriter writer = new StringWriter();
-        String username = user.getName(); //TODO jostain tähän tarvii saada käyttäjänimi
+        String username = user.getName();
         String fname = username + ".xml";
         try {
             serializer.setOutput(writer);
             serializer.startDocument("UTF-8", true);
             if (favorites.size() != 0) {
                 serializer.startTag("","favorites");
+
                 //adding favorites to XML
                 for (Lake lake : favorites){
                     serializer.startTag("","favorite");
@@ -260,12 +261,10 @@ public class AppManager implements Serializable {
                     serializer.text(String.valueOf(lake.getName()));
                     serializer.endTag("","lakeName");
 
-                    //TODO ynnä muut tiedot?
                     serializer.endTag("","favorite");
                 }
                 serializer.endTag("","favorites");
             }
-
 
             //adding trips to XML
             serializer.startTag("", "trips");
