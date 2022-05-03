@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AppManager {
+public class AppManager implements Serializable {
     private List<Lake> lakes = new ArrayList<Lake>();
     private  List<Trip> trips = new ArrayList<Trip>();
 
@@ -26,6 +27,7 @@ public class AppManager {
     public List<Lake> getLakes() {
         return lakes;
     }
+    public List<Trip> getTrips() {return trips;}
 
 
     public void readJSON(){
