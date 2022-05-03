@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- https://www.geeksforgeeks.org/how-to-change-the-whole-app-language-in-android-programmatically/ -->
+
+<resources>
+    <string name = "app_name">Harjoitustyo</string>
+    <string name = "change_language">Vaihda kielta</string>
+    <string name = "finnish">Suomi</string>
+</resources>
