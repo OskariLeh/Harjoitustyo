@@ -25,7 +25,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-public class UserManager implements Serializable {
+public class UserManager implements Serializable { // gets userdata from xml
     private boolean loggedIn = false;
     static Context context;
     static Document xmlDoc;
@@ -74,7 +74,7 @@ public class UserManager implements Serializable {
     }
 
 
-    public String addUser(String name, String pw, String email) {
+    public String addUser(String name, String pw, String email) { //adds user to xml when somebody signs up
         String error = "";
         System.out.println(context.getFilesDir());
         Boolean newUser = true;
@@ -84,7 +84,7 @@ public class UserManager implements Serializable {
                 error = ("User "+user.getName().toString()+ " already exists");
                 newUser = false;
             }
-        }
+        } //checking if every field is filled
         if (pw.isEmpty()){
             error = "Add password";
             newUser = false;
@@ -94,14 +94,14 @@ public class UserManager implements Serializable {
             newUser = false;
         }
 
-        if (newUser) {
+        if (newUser) { // adding new user to list
             User user = new User();
             user.setName(name);
             user.setPasscode(pw);
             user.setEmail(email);
             users.add(user);
 
-            XmlSerializer serializer = Xml.newSerializer();
+            XmlSerializer serializer = Xml.newSerializer(); //adding users to xml
             StringWriter writer = new StringWriter();
             try{
                 serializer.setOutput(writer);
@@ -133,7 +133,7 @@ public class UserManager implements Serializable {
                 osw.write(result);
                 osw.close();
 
-                String fname = name + ".xml";
+                String fname = name + ".xml"; // creating xml for user (trips and favorites goes here)
                 osw = new OutputStreamWriter(context.openFileOutput(fname,Context.MODE_PRIVATE));
                 osw.write("");
                 osw.close();
@@ -145,7 +145,7 @@ public class UserManager implements Serializable {
         return error;
     }
 
-    public String loginCheck(String name, String pw) {
+    public String loginCheck(String name, String pw) { //checks login info (info from userdata xml)
         String error = "";
         for (User user : users) {
             String qname = user.getName();
