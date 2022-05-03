@@ -8,7 +8,9 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import java.util.Locale;
 
+import androidx.constraintlayout.core.widgets.Helper;
 
 import java.util.Locale;
 
@@ -16,7 +18,7 @@ import java.util.Locale;
 //Riikka
 //This class is for changing the languages
 public class LocalHelperLanguages {
-    private static final String SELECTED_LANGUAGE = Locale.Helper.Selected.Language;
+    private static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
 
     public static Context setLocale(Context context, String language) {
         persist(context, language);
