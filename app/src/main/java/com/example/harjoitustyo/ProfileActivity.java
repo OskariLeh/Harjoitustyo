@@ -37,6 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         profileName = findViewById(R.id.textProfileName);
+        eMail = findViewById(R.id.textEmail);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         loggedIn = manager.getLoggedIn();
