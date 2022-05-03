@@ -1,5 +1,6 @@
 package com.example.harjoitustyo;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     AppManager manager = new AppManager();
     LakeRecyclerViewAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
+    UserManager userManager = null;
 
 
     @Override
@@ -58,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setAdapter(adapter);
     }
 
+
+
+
     // Hoitaa sivupalkin toiminnan
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -65,12 +70,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId()) {
             case R.id.nav_home:
-                intent = new Intent(MainActivity.this, LakeChosenActivity.class);
-                startActivity(intent);
+
                 break;
             case R.id.nav_trips:
                 intent= new Intent(MainActivity.this, TripViewActivity.class);
-                startActivityForResult(intent, 0);
+                intent.putExtra("manager", manager);
+                startActivity(intent);
                 break;
 
         }
@@ -108,10 +113,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.action_profile:
                 intent = new Intent(MainActivity.this, ProfileActivity.class);
-                startActivity(intent);
+                if (userManager != null){
+                    intent.putExtra("manager", userManager);
+                    System.out.println("putted extra");
+                }
+                startActivityForResult(intent, 1);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                userManager = (UserManager) data.getSerializableExtra("manager");
+                System.out.println("Found Extra");
+            }
+        }else {
+            super.onActivityResult(requestCode, resultCode , data);
         }
     }
 

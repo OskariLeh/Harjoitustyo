@@ -19,13 +19,21 @@ public class ProfileActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView profileName;
     private boolean loggedIn;
-    UserManager manager;
+    UserManager manager = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        manager = new UserManager(ProfileActivity.this);
+        if (manager == null) {
+            if (getIntent().hasExtra("manager")){
+                System.out.println("Found Extra");
+                manager = (UserManager) getIntent().getSerializableExtra("manager");
+            } else {
+                manager = new UserManager(ProfileActivity.this);
+                System.out.println("Created manager");
+            }
+        }
 
         profileName = findViewById(R.id.textProfileName);
         toolbar = findViewById(R.id.toolbar);
@@ -35,7 +43,6 @@ public class ProfileActivity extends AppCompatActivity {
         System.out.println(loggedIn);
 
         if (!loggedIn) {
-            System.out.println("kökkö");
             Fragment fragment = new LoginFragment();
             sendManagerToFragment(fragment);
             FragmentManager fManager = getSupportFragmentManager();
@@ -44,6 +51,8 @@ public class ProfileActivity extends AppCompatActivity {
             transaction.commit();
         }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

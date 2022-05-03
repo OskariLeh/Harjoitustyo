@@ -37,7 +37,7 @@ public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerVi
         Trip trip = trips.get(position);
         holder.lakeName.setText(trip.getLake().getName());
         holder.tripDuration.setText(trip.getDescription());
-        holder.tripDate.setText(trip.getTime().toString());
+        //holder.tripDate.setText(trip.getTime().toString());
         holder.townName.setText(trip.getLake().getTown());
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +67,7 @@ public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerVi
             lakeName = itemView.findViewById(R.id.lake_name_trip);
             tripDate = itemView.findViewById(R.id.trip_date);
             tripDuration = itemView.findViewById(R.id.trip_duration);
-            relativeLayout = itemView.findViewById(R.id.relative_layout);
+            relativeLayout = itemView.findViewById(R.id.relative_layout_trip);
         }
     }
 }

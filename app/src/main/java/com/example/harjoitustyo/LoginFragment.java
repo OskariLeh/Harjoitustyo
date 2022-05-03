@@ -1,5 +1,6 @@
 package com.example.harjoitustyo;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +83,6 @@ public class LoginFragment extends Fragment {
                 if (view == v.findViewById(R.id.button_login)) {
                     System.out.println("Button pressed");
                     infoText.setText(manager.loginCheck(uName.getText().toString(), pwd.getText().toString()));
-                    Intent intent = new Intent(getActivity(), ProfileActivity.class);
                 } else if (view == v.findViewById(R.id.text_signUp)) {
                     Fragment fragment = new SignUpFragment();
                     Bundle bundle = new Bundle();
@@ -100,8 +101,6 @@ public class LoginFragment extends Fragment {
         return v;
     }
 
-
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -109,9 +108,16 @@ public class LoginFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+
                 Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
+                intent.putExtra("manager", manager);
+                getActivity().setResult(Activity.RESULT_OK, intent);
+                getActivity().finish();
+
             }
         };
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
+
 }

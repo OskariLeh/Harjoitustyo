@@ -27,10 +27,10 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class UserManager implements Serializable {
     private boolean loggedIn = false;
-    Context context = null;
-    Document xmlDoc;
-    ArrayList<User> users = new ArrayList<User>();
-    User user;
+    static Context context;
+    static Document xmlDoc;
+    static ArrayList<User> users = new ArrayList<User>();
+    static User user;
 
     public UserManager(Context context){
         this.context = context;

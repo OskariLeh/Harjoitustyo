@@ -18,8 +18,7 @@ public class Trip implements Serializable {
         this.lake = lake;
     }
 
-    public Trip(Time time, Lake lake, String description, String duration) {
-        this.time = time;
+    public Trip(Lake lake, String description, String duration) {
         this.lake = lake;
         this.description = description;
         this.duration = duration;
