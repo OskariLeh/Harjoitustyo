@@ -16,6 +16,7 @@ public class TripViewActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<Trip> trips;
+    private UserManager userManager;
 
     AppManager manager;
 
@@ -24,7 +25,11 @@ public class TripViewActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trips);
-        manager = (AppManager) getIntent().getSerializableExtra("manager");
+        manager = new AppManager(TripViewActivity.this);
+        userManager = (UserManager) getIntent().getSerializableExtra("userManager");
+
+        manager.getTripsAndFavorites(userManager.getUser());
+        trips = manager.getTrips();
         recyclerView = findViewById(R.id.recycler_view_trip);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);

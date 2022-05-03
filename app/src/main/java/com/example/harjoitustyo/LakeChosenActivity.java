@@ -9,13 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 
 public class LakeChosenActivity extends AppCompatActivity {
-
+    private UserManager userManager;
     TextView name;
     TextView town;
     TextView drainageBasin;
@@ -32,6 +33,7 @@ public class LakeChosenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lake2);
         lake = (Lake) getIntent().getSerializableExtra("lake");
+        userManager = (UserManager) getIntent().getSerializableExtra("manager");
         addTripButton = (ImageButton) findViewById(R.id.imageButton4);
         addToFavorites = (ImageButton) findViewById(R.id.imageButton);
         toolbar = findViewById(R.id.toolbar);
@@ -59,8 +61,15 @@ public class LakeChosenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (view == findViewById(R.id.imageButton4)) {
-                    Intent intent = new Intent(LakeChosenActivity.this, LogTripActivity.class);
-                    startActivity(intent);
+                    if (userManager == null) {
+                        Toast.makeText(LakeChosenActivity.this, "You need to be logged in", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Intent intent = new Intent(LakeChosenActivity.this, LogTripActivity.class);
+                        intent.putExtra("manager", userManager);
+                        intent.putExtra("lake", lake);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             }
         };

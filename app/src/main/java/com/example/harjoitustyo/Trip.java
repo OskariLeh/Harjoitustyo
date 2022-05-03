@@ -6,30 +6,31 @@ import java.time.Duration;
 
 public class Trip implements Serializable {
     private String time;
-    private Lake lake;
+    private String lakeName;
     private String duration = "";
     private String description = "";
 
     public Trip(){
     }
 
-    public Trip(String time, Lake lake) {
+    public Trip(String time, String lakeName) {
         this.time = time;
-        this.lake = lake;
+        this.lakeName = lakeName;
     }
 
-    public Trip(Lake lake, String description, String duration) {
-        this.lake = lake;
+    public Trip(String lakeName, String description, String duration, String time) {
+        this.lakeName = lakeName;
         this.description = description;
         this.duration = duration;
+        this.time = time;
     }
 
 
     public String getTime() {
         return time;
     }
-    public Lake getLake() {
-        return lake;
+    public String getLake() {
+        return lakeName;
     }
     public String getDuration() {return duration;}
     public String getDescription() {
@@ -39,8 +40,8 @@ public class Trip implements Serializable {
     public void setTime(String time) {
         this.time = time;
     }
-    public void setLake(Lake lake) {
-        this.lake = lake;
+    public void setLake(String lakeName) {
+        this.lakeName = lakeName;
     }
     public void setDuration(String duration){this.duration = duration; }
     public void setDescription(String description) {

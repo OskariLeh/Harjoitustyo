@@ -35,10 +35,9 @@ public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Trip trip = trips.get(position);
-        holder.lakeName.setText(trip.getLake().getName());
+        holder.lakeName.setText(trip.getLake());
         holder.tripDuration.setText(trip.getDescription());
-        //holder.tripDate.setText(trip.getTime().toString());
-        holder.townName.setText(trip.getLake().getTown());
+        holder.tripDate.setText(trip.getTime());
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -22,14 +22,15 @@ public class LakeRecyclerViewAdapter extends RecyclerView.Adapter<LakeRecyclerVi
     private List<Lake> lakes ;
     private List<Lake> lakesCopy ;
     private Context context;
-    private User user;
+    UserManager userManager;
 
 
-    public LakeRecyclerViewAdapter(List<Lake> lakes, Context context ) {
+    public LakeRecyclerViewAdapter(List<Lake> lakes, Context context, UserManager userManager) {
         this.lakes = lakes;
         this.context = context;
-        this.user = user;
+        this.userManager = userManager;
         lakesCopy = new ArrayList<>(lakes);
+
     }
 
     @NonNull
@@ -54,6 +55,7 @@ public class LakeRecyclerViewAdapter extends RecyclerView.Adapter<LakeRecyclerVi
 
                 Intent intent = new Intent(context, LakeChosenActivity.class);
                 intent.putExtra("lake", lake);
+                intent.putExtra("manager", userManager);
 
                 ActivityLoader loader = new ActivityLoader();
                 loader.loadActivity(intent, context);

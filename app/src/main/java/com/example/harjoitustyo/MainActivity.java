@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import com.google.android.material.navigation.NavigationView;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     NavigationView nav;
     RecyclerView recyclerView;
-    AppManager manager = new AppManager();
+    AppManager manager = new AppManager(MainActivity.this);
     LakeRecyclerViewAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
     UserManager userManager = null;
@@ -51,13 +52,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        recyclerView = findViewById(R.id.recycler_view);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setHasFixedSize(true);
-        adapter = new LakeRecyclerViewAdapter(manager.getLakes(), MainActivity.this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        adapter = new LakeRecyclerViewAdapter(manager.getLakes(), MainActivity.this, userManager);
+        initRecyclerView();
     }
 
 
@@ -69,12 +65,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent;
 
         switch (item.getItemId()) {
-            case R.id.nav_home:
-
-                break;
             case R.id.nav_trips:
+                if(!userManager.getLoggedIn()){
+                    Toast.makeText(this, "You need to log in", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 intent= new Intent(MainActivity.this, TripViewActivity.class);
-                intent.putExtra("manager", manager);
+                intent.putExtra("userManager", userManager);
                 startActivity(intent);
                 break;
 
@@ -130,7 +127,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (resultCode == RESULT_OK) {
                 userManager = (UserManager) data.getSerializableExtra("manager");
                 System.out.println("Found Extra");
+                adapter = new LakeRecyclerViewAdapter(manager.getLakes(),MainActivity.this, userManager);
+                recyclerView = findViewById(R.id.recycler_view);
+                layoutManager = new LinearLayoutManager(this);
+                recyclerView.setHasFixedSize(true);
 
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(adapter);
             }
         }else {
             super.onActivityResult(requestCode, resultCode , data);
@@ -146,7 +149,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public UserManager getUserManager() {
-        return userManager;
+    public void initRecyclerView() {
+        recyclerView = findViewById(R.id.recycler_view);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setHasFixedSize(true);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
     }
 }

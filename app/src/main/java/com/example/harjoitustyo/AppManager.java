@@ -46,6 +46,13 @@ public class AppManager implements Serializable {
     }
     public List<Trip> getTrips() {return trips;}
 
+    public void addTrip(Trip trip) {
+        trips.add(trip);
+    }
+
+    public AppManager(Context context) {
+        this.context = context;
+    }
 
     public void readJSON(){
         if (lakes.isEmpty()) {
@@ -177,9 +184,10 @@ public class AppManager implements Serializable {
         return response;
     }
     public void getTripsAndFavorites(User user) {
+        trips.clear();
         InputStream ins = null;
         Document xmlDoc;
-        String username = user.getName(); //TODO jostain tähän tarvii saada käyttäjänimi
+        String username = user.getName();
         String fname = username + ".xml";
 
         //adding trips to list from XML
@@ -191,21 +199,16 @@ public class AppManager implements Serializable {
             for (Integer i = 0; i < nList.getLength(); i++) {
                 Node node = nList.item(i);
                 Element element = (Element) node;
-                String lakeID = element.getElementsByTagName("lakeID").item(0).getTextContent();
+                String lakeName = element.getElementsByTagName("lakeName").item(0).getTextContent();
                 String time = element.getElementsByTagName("time").item(0).getTextContent();
                 String description = element.getElementsByTagName("desc").item(0).getTextContent();
                 String duration = element.getElementsByTagName("duration").item(0).getTextContent();
 
                 Trip trip = new Trip();
-                for (Lake lake : lakes) {
-                    if(String.valueOf(lake.getId()).contentEquals(lakeID)){
-                        trip.setLake(lake); //TODO näin saatais hyödynnettyy olemassa olevia järvi-olioita
-                        break;
-                    }
-                }
                 trip.setDescription(description);
-                //trip.setTime(time); //TODO time muoto?
+                trip.setTime(time);
                 trip.setDuration(duration);
+                trip.setLake(lakeName);
 
                 trips.add(trip);
 
@@ -243,24 +246,26 @@ public class AppManager implements Serializable {
         try {
             serializer.setOutput(writer);
             serializer.startDocument("UTF-8", true);
-            serializer.startTag("","favorites");
+            if (favorites.size() != 0) {
+                serializer.startTag("","favorites");
+                //adding favorites to XML
+                for (Lake lake : favorites){
+                    serializer.startTag("","favorite");
 
-            //adding favorites to XML
-            for (Lake lake : favorites){
-                serializer.startTag("","favorite");
+                    serializer.startTag("","name");
+                    serializer.text(lake.getName());
+                    serializer.endTag("","name");
 
-                serializer.startTag("","name");
-                serializer.text(lake.getName());
-                serializer.endTag("","name");
+                    serializer.startTag("","lakeName");
+                    serializer.text(String.valueOf(lake.getName()));
+                    serializer.endTag("","lakeName");
 
-                serializer.startTag("","lakeID");
-                serializer.text(String.valueOf(lake.getId()));
-                serializer.endTag("","lakeID");
-
-                //TODO ynnä muut tiedot?
-                serializer.endTag("","favorite");
+                    //TODO ynnä muut tiedot?
+                    serializer.endTag("","favorite");
+                }
+                serializer.endTag("","favorites");
             }
-            serializer.endTag("","favorites");
+
 
             //adding trips to XML
             serializer.startTag("", "trips");
@@ -268,12 +273,12 @@ public class AppManager implements Serializable {
             for (Trip trip : trips) {
                 serializer.startTag("", "trip");
 
-                serializer.startTag("", "lakeID");
-                serializer.text(String.valueOf(trip.getLake().getId()));
-                serializer.endTag("", "lakeID");
+                serializer.startTag("", "lakeName");
+                serializer.text(String.valueOf(trip.getLake()));
+                serializer.endTag("", "lakeName");
 
                 serializer.startTag("", "time");
-                serializer.text(trip.getTime().toString()); //TODO missä muodossa tripin aika tulee?
+                serializer.text(trip.getTime());
                 serializer.endTag("", "time");
 
                 serializer.startTag("", "duration");
@@ -294,6 +299,7 @@ public class AppManager implements Serializable {
             OutputStreamWriter osw = new OutputStreamWriter(context.openFileOutput(fname, Context.MODE_PRIVATE));
             osw.write(result);
             osw.close();
+            trips.clear();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

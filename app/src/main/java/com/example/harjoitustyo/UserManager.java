@@ -30,7 +30,7 @@ public class UserManager implements Serializable {
     static Context context;
     static Document xmlDoc;
     static ArrayList<User> users = new ArrayList<User>();
-    User user = null;
+    static User user = null;
 
     public User getUser() {
         return user;
