@@ -30,7 +30,11 @@ public class UserManager implements Serializable {
     static Context context;
     static Document xmlDoc;
     static ArrayList<User> users = new ArrayList<User>();
-    static User user;
+    User user;
+
+    public User getUser() {
+        return user;
+    }
 
     public UserManager(Context context){
         this.context = context;
@@ -176,6 +180,13 @@ public class UserManager implements Serializable {
             }
         }
         return error;
+    }
+
+    public void logOut() {
+        if (loggedIn) {
+            user = null;
+            loggedIn = false;
+        }
     }
 
     public boolean getLoggedIn() {return loggedIn;}

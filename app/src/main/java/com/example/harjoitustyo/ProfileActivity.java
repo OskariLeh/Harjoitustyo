@@ -18,6 +18,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView profileName;
+    private TextView eMail;
     private boolean loggedIn;
     UserManager manager = null;
 
@@ -49,7 +50,11 @@ public class ProfileActivity extends AppCompatActivity {
             FragmentTransaction transaction = fManager.beginTransaction();
             transaction.replace(R.id.fragmentContainer, fragment);
             transaction.commit();
+        }else {
+            eMail.setText(manager.getUser().getEmail());
+            profileName.setText(manager.getUser().getName());
         }
+
     }
 
 
@@ -72,9 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    public void closeActivity(){
-        finish();
-    }
+
 
     public void sendManagerToFragment(Fragment fragment){
         Bundle bundle = new Bundle();

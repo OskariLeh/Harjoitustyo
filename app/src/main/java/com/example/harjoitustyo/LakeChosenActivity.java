@@ -45,4 +45,5 @@ public class LakeChosenActivity extends AppCompatActivity {
         areaOfLake.setText("Keskisyvyys: "+lake.getAverageDepth());
     }
 
+
 }
