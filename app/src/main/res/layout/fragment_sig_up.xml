@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:textSize="20sp"
         android:textColor="@color/black"
-        android:text="Sign up here"
+        android:text="Luo tili"
         android:textAlignment="center"/>
 
     <EditText
@@ -19,26 +19,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="100dp"
-        android:hint="Username" />
+        android:hint="Käyttäjänimi" />
 
     <EditText
         android:id="@+id/sign_up_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="200dp"
-        android:hint="password" />
+        android:hint="Salasana" />
 
     <EditText
         android:id="@+id/sign_up_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="300dp"
-        android:hint="e-mail" />
+        android:hint="Sähköposti" />
     <Button
         android:id="@+id/sign_up_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign up"
+        android:text="Luo"
         android:layout_marginTop="350dp"
         android:layout_marginHorizontal="150dp"/>
 

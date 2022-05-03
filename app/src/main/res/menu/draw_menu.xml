@@ -10,11 +10,6 @@
             android:id="@+id/nav_setting"
             />
         <item
-            android:title="Home"
-            android:icon="@drawable/ic_baseline_home_24"
-            android:id="@+id/nav_home"
-            />
-        <item
             android:title="@string/trips_eng"
             android:icon="@drawable/ic_baseline_bookmark_add_24"
             android:id="@+id/nav_trips"

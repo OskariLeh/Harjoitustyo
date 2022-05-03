@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Log in"
+        android:text="Kirjaudu sisään"
         android:textSize="25sp"
         android:textColor="@color/black"/>
 
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="100dp"
-        android:hint="Username/E-mail"
+        android:hint="Käyttäjänimi"
         android:minHeight="48dp" />
 
     <EditText
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="200dp"
-        android:hint="Password"
+        android:hint="Salasana"
         android:minHeight="48dp" />
 
     <Button
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="145dp"
         android:layout_marginVertical="250dp"
-        android:text="Log In" />
+        android:text="kirjaudu" />
 
     <TextView
         android:id="@+id/text_signUp"
@@ -44,7 +44,7 @@
         android:layout_height="34dp"
         android:layout_marginHorizontal="170dp"
         android:layout_marginVertical="300dp"
-        android:text="Sign up"
+        android:text="Luo tili"
         android:textColor="@color/purple_500" />
 
     <TextView
